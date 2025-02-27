@@ -7,6 +7,8 @@ const router = express.Router();
 router.get("/", moviesControllers.index);
 //show
 router.get("/:id", moviesControllers.show);
+//post
+router.post("/:id/reviews", moviesControllers.storeReview);
 //destroy
 // router.delete("/:id", moviesControllers.destroy);
 

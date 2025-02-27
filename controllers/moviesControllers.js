@@ -27,10 +27,16 @@ const index = (req, res) => {
 const show = (req, res) => {
   const { id } = req.params;
 
+  //   const moviesSql = `
+  //     SELECT *
+  //     FROM movies
+  //     WHERE id = ?`;
   const moviesSql = `
-    SELECT * 
+    SELECT movies.*,  ROUND(AVG(reviews.vote)) as media_vote
     FROM movies
-    WHERE id = ?`;
+    LEFT JOIN reviews ON movies.id = reviews.movie_id
+    WHERE movies.id= ?
+    GROUP BY movies.id`;
 
   connection.query(moviesSql, [id], (err, results) => {
     if (err) {
@@ -67,4 +73,22 @@ const show = (req, res) => {
     });
   });
 };
-module.exports = { index, show };
+
+const storeReview = (req, res) => {
+  const { id } = req.params;
+  const { name, text, vote } = req.body;
+
+  const sql =
+    "INSERT INTO reviews (movie_id, name, text, vote) VALUES (?, ?, ?, ?)";
+
+  connection.query(sql, [id, name, text, vote], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Query Error",
+        message: `Database query failed: ${sql}`,
+      });
+    }
+    res.status(201).json({ id: results.insertId });
+  });
+};
+module.exports = { index, show, storeReview };
