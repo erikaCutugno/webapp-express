@@ -17,7 +17,7 @@ const index = (req, res) => {
     }
 
     const movies = results.map((movie) => {
-      movie.image = `${process.env.BE_URL}/movies/${movie.image}`;
+      movie.image = `${process.env.BE_URL}/movies_cover/${movie.image}`;
       return movie;
     });
     res.json(movies);
@@ -48,7 +48,7 @@ const show = (req, res) => {
       });
     }
 
-    movie.image = `${process.env.BE_URL}/movies/${movie.image}`;
+    movie.image = `${process.env.BE_URL}/movies_cover/${movie.image}`;
 
     const reviewSql = `
     SELECT *
