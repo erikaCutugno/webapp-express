@@ -15,7 +15,12 @@ const index = (req, res) => {
         message: `Database query failed: ${sql}`,
       });
     }
-    res.json(results);
+
+    const movies = results.map((movie) => {
+      movie.image = `${process.env.BE_URL}/movies/${movie.image}`;
+      return movie;
+    });
+    res.json(movies);
   });
 };
 
@@ -42,6 +47,8 @@ const show = (req, res) => {
         message: "Movie not found",
       });
     }
+
+    movie.image = `${process.env.BE_URL}/movies/${movie.image}`;
 
     const reviewSql = `
     SELECT *
