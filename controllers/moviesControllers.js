@@ -91,4 +91,28 @@ const storeReview = (req, res) => {
     res.status(201).json({ id: results.insertId });
   });
 };
-module.exports = { index, show, storeReview };
+
+//store
+const store = (req, res) => {
+  const image = req.file.filename;
+  const { title, genre, director, abstract } = req.body;
+
+  const sql =
+    "INSERT INTO reviews (title, genre, director, abstract, image) VALUES (?, ?, ?, ?, ?)";
+  connection.query(
+    sql,
+    [title, genre, director, abstract, image],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          error: "Query Error",
+          message: `Database query failed: ${sql}`,
+        });
+      }
+      res.status(201).json({ id: results.insertId });
+    }
+  );
+  //   console.log(req.file), res.json();
+};
+
+module.exports = { index, show, storeReview, store };
