@@ -98,7 +98,7 @@ const store = (req, res) => {
   const { title, genre, director, abstract } = req.body;
 
   const sql =
-    "INSERT INTO reviews (title, genre, director, abstract, image) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO movies (title, genre, director, abstract, image) VALUES (?, ?, ?, ?, ?)";
   connection.query(
     sql,
     [title, genre, director, abstract, image],
@@ -112,7 +112,6 @@ const store = (req, res) => {
       res.status(201).json({ id: results.insertId });
     }
   );
-  //   console.log(req.file), res.json();
 };
 
 module.exports = { index, show, storeReview, store };
