@@ -95,13 +95,13 @@ const storeReview = (req, res) => {
 //store
 const store = (req, res) => {
   const image = req.file.filename;
-  const { title, genre, director, abstract } = req.body;
+  const { title, genre, director, abstract, release_year } = req.body;
 
   const sql =
-    "INSERT INTO movies (title, genre, director, abstract, image) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO movies (title, genre, director, abstract, release_year, image) VALUES (?, ?, ?, ?, ?, ?)";
   connection.query(
     sql,
-    [title, genre, director, abstract, image],
+    [title, genre, director, abstract, release_year, image],
     (err, results) => {
       if (err) {
         return res.status(500).json({
