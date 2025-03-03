@@ -21,6 +21,6 @@ router.post("/:id/reviews", moviesControllers.storeReview);
 //post review
 router.post("/", upload.single("image"), moviesControllers.store);
 //destroy
-// router.delete("/:id", moviesControllers.destroy);
+router.delete("/:id", moviesControllers.destroy);
 
 module.exports = router;

@@ -114,4 +114,21 @@ const store = (req, res) => {
   );
 };
 
-module.exports = { index, show, storeReview, store };
+//destroy
+const destroy = (req, res) => {
+  const { id } = req.params;
+
+  const sql = `DELETE FROM movies WHERE id= ?`;
+
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Failed to delete movie",
+        message: `Failed to delete movie: ${id}`,
+      });
+    }
+
+    res.sendStatus(204);
+  });
+};
+module.exports = { index, show, storeReview, store, destroy };
